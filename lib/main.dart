@@ -1,8 +1,10 @@
+import 'screens/home_page.dart';
 import 'theme/app_theme.dart';
 import 'theme/theme_state.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp(themeState: ThemeState()));
 }
 
@@ -21,29 +23,8 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeState.themeMode,
-          home: Scaffold(
-            appBar: AppBar(title: const Text('Hummy')),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Hello World'),
-                  const SizedBox(height: 20),
-                  // Temporary button to test theme toggling
-                  ElevatedButton(
-                    onPressed: () {
-                      themeState.toggleTheme();
-                    },
-                    child: Text(
-                      themeState.themeMode == ThemeMode.light
-                          ? 'Switch to Dark'
-                          : 'Switch to Light',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // We pass themeState to HomePage so it can toggle theme and access Navigator correctly
+          home: HomePage(themeState: themeState),
         );
       },
     );
